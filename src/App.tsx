@@ -1,6 +1,7 @@
 import { ThemeProvider } from '@emotion/react'
-import Login from './components/Login'
+// import Login from './components/Login'
 import { Box, createTheme } from '@mui/material'
+import Header from './components/Header'
 
 const App = () => {
   const theme = createTheme({
@@ -12,7 +13,8 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box width="100%" height="100%">
-        <Login />
+        {/* <Login /> */}
+        <Header />
       </Box>
     </ThemeProvider>
   )
