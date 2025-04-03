@@ -1,8 +1,26 @@
+import React, { useState } from 'react'
 import { Avatar, Box, IconButton, Typography } from '@mui/material'
 import logo from '/Trackola.svg'
 import NotificationsIcon from '@mui/icons-material/Notifications'
+import ProfilePopup from './ProfilePopup' // Import the ProfilePopup component
 
-const Header = () => {
+const Header: React.FC = () => {
+  // State for managing the profile popup
+  const [profileAnchorEl, setProfileAnchorEl] = useState<HTMLElement | null>(
+    null
+  )
+  const profilePopupOpen = Boolean(profileAnchorEl)
+
+  const handleProfileClick = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    setProfileAnchorEl(event.currentTarget)
+  }
+
+  const handleProfileClose = (): void => {
+    setProfileAnchorEl(null)
+  }
+
   return (
     <Box
       sx={{
@@ -16,7 +34,7 @@ const Header = () => {
     >
       <Box
         sx={{
-          width: '90dvw',
+          width: '95dvw',
           padding: '0 24px',
           m: 'auto',
           display: 'flex',
@@ -35,7 +53,7 @@ const Header = () => {
             <NotificationsIcon sx={{ fontSize: 28 }} />
           </IconButton>
 
-          <IconButton>
+          <IconButton onClick={handleProfileClick}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
               <Avatar
                 sx={{
@@ -49,6 +67,13 @@ const Header = () => {
               <Typography variant="h6">Deve</Typography>
             </Box>
           </IconButton>
+
+          {/* Profile Popup */}
+          <ProfilePopup
+            anchorEl={profileAnchorEl}
+            open={profilePopupOpen}
+            handleClose={handleProfileClose}
+          />
         </Box>
       </Box>
     </Box>
