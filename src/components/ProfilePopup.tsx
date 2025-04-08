@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Box,
   Typography,
@@ -10,72 +10,84 @@ import {
   Divider,
   Popover,
   Avatar,
-} from '@mui/material'
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
-import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined'
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
-import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined'
-import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined'
-import ExtensionOutlinedIcon from '@mui/icons-material/ExtensionOutlined'
+} from "@mui/material";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
+import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
+import ExtensionOutlinedIcon from "@mui/icons-material/ExtensionOutlined";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 interface ProfilePopupProps {
-  anchorEl: HTMLElement | null
-  open: boolean
-  handleClose: () => void
+  anchorEl: HTMLElement | null;
+  open: boolean;
+  handleClose: () => void;
+  setDrawerOpen: (open: boolean) => void; // Add prop for controlling the drawer
 }
 
 interface MenuItem {
-  label: string
-  id: string
-  icon: React.ReactNode
+  label: string;
+  id: string;
+  icon: React.ReactNode;
 }
 
 const ProfilePopup: React.FC<ProfilePopupProps> = ({
   anchorEl,
   open,
   handleClose,
+  setDrawerOpen,
 }) => {
+  const navigate = useNavigate(); // Initialize useNavigate
+
   const menuItems: MenuItem[] = [
     {
-      label: 'Settings',
-      id: 'settings',
+      label: "Settings",
+      id: "settings",
       icon: <SettingsOutlinedIcon fontSize="small" />,
     },
     {
-      label: 'Project',
-      id: 'project',
+      label: "Project",
+      id: "project",
       icon: <FolderOutlinedIcon fontSize="small" />,
     },
     {
-      label: 'Logout',
-      id: 'logout',
+      label: "Logout",
+      id: "logout",
       icon: <LogoutOutlinedIcon fontSize="small" />,
     },
-  ]
+  ];
 
   const adminItems: MenuItem[] = [
     {
-      label: 'Manage Users',
-      id: 'manage-users',
+      label: "Manage Users",
+      id: "manage-users",
       icon: <PeopleAltOutlinedIcon fontSize="small" />,
     },
     {
-      label: 'Sign Up user',
-      id: 'sign-up-user',
+      label: "Sign Up user",
+      id: "sign-up-user",
       icon: <PersonAddOutlinedIcon fontSize="small" />,
     },
     {
-      label: 'Feature',
-      id: 'feature',
+      label: "Feature",
+      id: "feature",
       icon: <ExtensionOutlinedIcon fontSize="small" />,
     },
-  ]
+  ];
 
   const handleMenuClick = (id: string): void => {
+    if (id === "settings") {
+      setDrawerOpen(false);
+      navigate("/settings"); // Navigate to the settings page
+    } else if (id === "sign-up-user") {
+      setDrawerOpen(false);
+      navigate("/sign-up"); // Navigate to the Sign Up page
+    }
     // Handle navigation or action based on menu item
-    console.log(`Clicked on ${id}`)
-    handleClose()
-  }
+    console.log(`Clicked on ${id}`);
+    handleClose();
+  };
 
   return (
     <Popover
@@ -83,46 +95,44 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({
       open={open}
       onClose={handleClose}
       anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'right',
+        vertical: "bottom",
+        horizontal: "right",
       }}
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       PaperProps={{
         elevation: 4,
         sx: {
           mt: 0.5,
-          overflow: 'visible',
+          overflow: "visible",
           width: 230,
           borderRadius: 1,
-          '&:before': {
+          "&:before": {
             content: '""',
-            display: 'block',
-            position: 'absolute',
+            display: "block",
+            position: "absolute",
             top: 0,
             right: 14,
             width: 10,
             height: 10,
-            bgcolor: 'background.paper',
-            transform: 'translateY(-50%) rotate(45deg)',
+            bgcolor: "background.paper",
+            transform: "translateY(-50%) rotate(45deg)",
             zIndex: 0,
           },
         },
-      }}
-    >
+      }}>
       {/* User profile header */}
       <Box
         sx={{
           p: 2,
-          display: 'flex',
-          alignItems: 'center',
-          borderBottom: '1px solid #f0f0f0',
-          bgcolor: '#f9f9f9',
-        }}
-      >
-        <Avatar sx={{ bgcolor: '#1976d2', width: 40, height: 40, mr: 1.5 }}>
+          display: "flex",
+          alignItems: "center",
+          borderBottom: "1px solid #f0f0f0",
+          bgcolor: "#f9f9f9",
+        }}>
+        <Avatar sx={{ bgcolor: "#1976d2", width: 40, height: 40, mr: 1.5 }}>
           D
         </Avatar>
         <Box>
@@ -143,12 +153,11 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({
               sx={{
                 py: 1,
                 px: 2,
-                '&:hover': {
-                  bgcolor: '#f5f5f5',
+                "&:hover": {
+                  bgcolor: "#f5f5f5",
                 },
-              }}
-            >
-              <ListItemIcon sx={{ minWidth: 36, color: '#666' }}>
+              }}>
+              <ListItemIcon sx={{ minWidth: 36, color: "#666" }}>
                 {item.icon}
               </ListItemIcon>
               <ListItemText
@@ -165,11 +174,10 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({
 
       <Divider />
 
-      <Box sx={{ p: 1.5, px: 2, bgcolor: '#f9f9f9' }}>
+      <Box sx={{ p: 1.5, px: 2, bgcolor: "#f9f9f9" }}>
         <Typography
           variant="subtitle2"
-          sx={{ fontWeight: 700, color: '#555', fontSize: '0.75rem' }}
-        >
+          sx={{ fontWeight: 700, color: "#555", fontSize: "0.75rem" }}>
           ADMIN
         </Typography>
       </Box>
@@ -182,12 +190,11 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({
               sx={{
                 py: 1,
                 px: 2,
-                '&:hover': {
-                  bgcolor: '#f5f5f5',
+                "&:hover": {
+                  bgcolor: "#f5f5f5",
                 },
-              }}
-            >
-              <ListItemIcon sx={{ minWidth: 36, color: '#666' }}>
+              }}>
+              <ListItemIcon sx={{ minWidth: 36, color: "#666" }}>
                 {item.icon}
               </ListItemIcon>
               <ListItemText
@@ -202,7 +209,7 @@ const ProfilePopup: React.FC<ProfilePopupProps> = ({
         ))}
       </List>
     </Popover>
-  )
-}
+  );
+};
 
-export default ProfilePopup
+export default ProfilePopup;
